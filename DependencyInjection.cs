@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace YTNotifier.Api;
 
@@ -17,6 +19,7 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddOpenApi();
+        services.AddValidatorsFromAssemblyContaining<Program>();
 
         return services;
     }
@@ -27,6 +30,14 @@ public static class DependencyInjection
             ?? throw new ArgumentException("Database connection string not found.");
 
         services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+        return services;
+    }
+
+    public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IJwtProvider, JwtProvider>();
 
         return services;
     }
