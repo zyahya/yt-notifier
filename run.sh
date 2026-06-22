@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet run --project TubeShuffle.Api.csproj --launch-profile https
+dotnet run --project YTNotifier.Api.csproj --launch-profile https
