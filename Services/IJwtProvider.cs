@@ -1,6 +1,4 @@
-﻿using YTNotifier.Api.Entities;
-
-namespace YTNotifier.Api.Services;
+﻿namespace YTNotifier.Api.Services;
 
 public interface IJwtProvider
 {
