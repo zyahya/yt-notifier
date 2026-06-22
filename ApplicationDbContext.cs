@@ -1,9 +1,6 @@
 ﻿using System.Reflection;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-using YTNotifier.Api.Entities;
 
 namespace YTNotifier.Api;
 

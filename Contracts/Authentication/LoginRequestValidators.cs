@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace YTNotifier.Api.Contracts.Authentication;
+﻿namespace YTNotifier.Api.Contracts.Authentication;
 
 public class LoginRequestValidators : AbstractValidator<LoginRequest>
 {

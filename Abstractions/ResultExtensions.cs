@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace YTNotifier.Api.Abstractions;
+﻿namespace YTNotifier.Api.Abstractions;
 
 public static class ResultExtensions
 {

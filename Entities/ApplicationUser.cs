@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-namespace YTNotifier.Api.Entities;
+﻿namespace YTNotifier.Api.Entities;
 
 public class ApplicationUser : IdentityUser
 {
