@@ -1,0 +1,75 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
+  <diagram name="Daily Background Job" id="xlV483hTUyiVyfPvI7IN">
+    <mxGraphModel dx="2037" dy="1261" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Cascadia Code;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-2" target="v4OjiThSaAhTE-RjkUhX-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-2" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fontFamily=Cascadia Code;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="294" y="194" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-3" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="624" y="594" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-4" value="&lt;b&gt;Background Job&lt;/b&gt;&lt;br&gt;Runs everyday at 12 AM" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="284" y="154" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Cascadia Code;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-6" target="v4OjiThSaAhTE-RjkUhX-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-6" value="Loop through each channel" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="434" y="294" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Cascadia Code;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-8" target="v4OjiThSaAhTE-RjkUhX-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-8" value="Make API call to fetch videos published during last 7 days" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="564" y="294" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-10" target="v4OjiThSaAhTE-RjkUhX-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-10" value="Add videos to the Videos table" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="784" y="294" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-14" target="v4OjiThSaAhTE-RjkUhX-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-14" target="v4OjiThSaAhTE-RjkUhX-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-13" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="v4OjiThSaAhTE-RjkUhX-12">
+          <mxGeometry x="-0.1759" y="-1" relative="1" as="geometry">
+            <mxPoint y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-14" value="If video exists" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="784" y="424" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-16" target="v4OjiThSaAhTE-RjkUhX-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-16" value="Add" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="784" y="574" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-18" target="v4OjiThSaAhTE-RjkUhX-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-18" value="Don&#39;t add" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="624" y="424" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Cascadia Code;" edge="1" parent="1" source="v4OjiThSaAhTE-RjkUhX-20" target="v4OjiThSaAhTE-RjkUhX-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-20" value="Get channels from DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontFamily=Cascadia Code;" vertex="1" parent="1">
+          <mxGeometry x="294" y="294" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v4OjiThSaAhTE-RjkUhX-21" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="834" y="544" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
