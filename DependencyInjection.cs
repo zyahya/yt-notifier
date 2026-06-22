@@ -1,4 +1,6 @@
-﻿namespace YTNotifier.Api;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+namespace YTNotifier.Api;
 
 public static class DependencyInjection
 {
@@ -7,7 +9,7 @@ public static class DependencyInjection
         services
             .AddApiConfiguration()
             .AddDatabaseConfiguration(configuration)
-            .AddAuthenticationConfiguration();
+            .AddAuthenticationConfiguration(configuration);
 
         return services;
     }
@@ -34,7 +36,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services)
+    public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
@@ -56,6 +58,30 @@ public static class DependencyInjection
             options.Password.RequireDigit = true;
             options.Password.RequireUppercase = true;
             options.Password.RequireNonAlphanumeric = true;
+        });
+
+        var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtOptions.Issuer,
+
+                ValidateAudience = true,
+                ValidAudience = jwtOptions.Audience,
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.SecretKey)),
+
+                ValidateLifetime = true
+            };
         });
 
         return services;
