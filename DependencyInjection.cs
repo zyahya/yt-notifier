@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-
-using Microsoft.EntityFrameworkCore;
-
-namespace YTNotifier.Api;
+﻿namespace YTNotifier.Api;
 
 public static class DependencyInjection
 {
@@ -10,7 +6,8 @@ public static class DependencyInjection
     {
         services
             .AddApiConfiguration()
-            .AddDatabaseConfiguration(configuration);
+            .AddDatabaseConfiguration(configuration)
+            .AddAuthenticationConfiguration();
 
         return services;
     }
@@ -19,7 +16,10 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddOpenApi();
-        services.AddValidatorsFromAssemblyContaining<Program>();
+
+        services
+            .AddValidatorsFromAssemblyContaining<Program>()
+            .AddFluentValidationAutoValidation();
 
         return services;
     }
@@ -38,6 +38,25 @@ public static class DependencyInjection
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
+
+        services.AddOptions<JwtOptions>()
+            .BindConfiguration(JwtOptions.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services
+            .AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.Configure<IdentityOptions>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+
+            options.Password.RequiredLength = 8;
+            options.Password.RequireDigit = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+        });
 
         return services;
     }
