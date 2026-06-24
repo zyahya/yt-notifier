@@ -13,5 +13,20 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.Property(x => x.LastName)
             .IsRequired()
             .HasMaxLength(50);
+
+        builder
+            .HasMany(x => x.Channels)
+            .WithMany(x => x.Users)
+            .UsingEntity<Subscriptions>(
+                r => r
+                    .HasOne(x => x.Channel)
+                    .WithMany(x => x.Subscriptions)
+                    .HasForeignKey(x => x.ChannelId),
+                l => l
+                    .HasOne(x => x.User)
+                    .WithMany(x => x.Subscriptions)
+                    .HasForeignKey(x => x.UserId),
+                j => j.HasKey(x => new { x.UserId, x.ChannelId })
+            );
     }
 }
