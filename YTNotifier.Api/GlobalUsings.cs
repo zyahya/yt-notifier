@@ -13,6 +13,8 @@ global using Microsoft.IdentityModel.Tokens;
 
 global using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
-global using YTNotifier.Api.Abstractions;
+global using YTNotifier.Api.Abstractions.Constants;
+global using YTNotifier.Api.Abstractions.Errors;
+global using YTNotifier.Api.Abstractions.Result;
 global using YTNotifier.Api.Entities;
 global using YTNotifier.Api.Services;
