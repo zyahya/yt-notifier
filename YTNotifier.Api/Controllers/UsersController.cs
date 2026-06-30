@@ -21,7 +21,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> UpdateDeliveryTime([FromBody] UpdateDeliveryTimeRequest request)
     {
         var result = await _userService
-            .SetDeliveryTimeAsync(UserId, request.PreferredDeliveryDay, request.PreferredDeliveryHour);
+            .SetDeliveryTimeAsync(UserId, request.DeliveryDay, request.DeliveryHour);
 
         return result.IsSuccess
             ? Ok()

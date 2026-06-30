@@ -43,6 +43,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationConfiguration(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IChannelsService, ChannelsService>();
 
         return services;
     }
