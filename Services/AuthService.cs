@@ -1,6 +1,5 @@
 ﻿using Mapster;
 
-using YTNotifier.Api.Abstractions;
 using YTNotifier.Api.Contracts.Authentication;
 
 namespace YTNotifier.Api.Services;
