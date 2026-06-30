@@ -1,4 +1,4 @@
-﻿namespace YTNotifier.Api.Abstractions;
+﻿namespace YTNotifier.Api.Abstractions.Result;
 
 public static class ResultExtensions
 {
