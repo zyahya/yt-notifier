@@ -1,5 +1,4 @@
-﻿using YTNotifier.Api.Abstractions;
-using YTNotifier.Api.Contracts.Authentication;
+﻿using YTNotifier.Api.Contracts.Authentication;
 
 namespace YTNotifier.Api.Services;
 
