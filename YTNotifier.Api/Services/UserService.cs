@@ -13,11 +13,11 @@ public class UserService : IUserService
         _userManager = userManager;
     }
 
-    public async Task<Result> ChangePasswordAsync(ChangePasswordRequest request)
+    public async Task<Result> ChangePasswordAsync(string userId, ChangePasswordRequest request)
     {
-        var user = await _userManager.FindByIdAsync(request.UserId);
+        var user = await _userManager.FindByIdAsync(userId);
 
-        var result = await _userManager.ChangePasswordAsync(user!, request.Current, request.New);
+        var result = await _userManager.ChangePasswordAsync(user!, request.CurrentPassword, request.NewPassword);
 
         if (!result.Succeeded)
         {
@@ -67,7 +67,7 @@ public class UserService : IUserService
         return Result.Success();
     }
 
-    public Task<Result> UpdateProfileAsync(UpdateProfileRequest request)
+    public Task<Result> UpdateProfileAsync(string userId, UpdateProfileRequest request)
     {
         // TODO: Implement 'UpdateProfileAsync'
         throw new NotImplementedException();

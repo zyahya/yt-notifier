@@ -18,8 +18,8 @@ public class JwtProvider : IJwtProvider
             new(JwtRegisteredClaimNames.Iss, _jwtOptions.Issuer),
             new(JwtRegisteredClaimNames.Sub, user.Id),
             new(JwtRegisteredClaimNames.Aud, _jwtOptions.Audience),
-            new(JwtRegisteredClaimNames.Exp, DateTime.UtcNow.AddSeconds(expiresIn).ToString()),
-            new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+            new(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.UtcNow.AddSeconds(expiresIn)).ToUnixTimeSeconds().ToString()),
+            new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         ];
 

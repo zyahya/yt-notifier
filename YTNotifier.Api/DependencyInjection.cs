@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+using YTNotifier.Api.OpenAi;
+
 namespace YTNotifier.Api;
 
 public static class DependencyInjection
@@ -9,7 +11,8 @@ public static class DependencyInjection
         services
             .AddApiConfiguration()
             .AddDatabaseConfiguration(configuration)
-            .AddAuthenticationConfiguration(configuration);
+            .AddAuthenticationConfiguration(configuration)
+            .AddApplicationConfiguration();
 
         return services;
     }
@@ -21,7 +24,8 @@ public static class DependencyInjection
 
         services
             .AddValidatorsFromAssemblyContaining<Program>()
-            .AddFluentValidationAutoValidation();
+            .AddFluentValidationAutoValidation()
+            .AddOpenApi(options => options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
         return services;
     }
@@ -32,6 +36,13 @@ public static class DependencyInjection
             ?? throw new ArgumentException("Database connection string not found.");
 
         services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+        return services;
+    }
+
+    public static IServiceCollection AddApplicationConfiguration(this IServiceCollection services)
+    {
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }
