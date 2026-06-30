@@ -4,10 +4,10 @@ public class SetDeliveryTimeRequestValidator : AbstractValidator<UpdateDeliveryT
 {
     public SetDeliveryTimeRequestValidator()
     {
-        RuleFor(x => x.PreferredDeliveryDay)
+        RuleFor(x => x.DeliveryDay)
             .ExclusiveBetween(0, 6);
 
-        RuleFor(x => x.PreferredDeliveryHour)
+        RuleFor(x => x.DeliveryHour)
             .ExclusiveBetween(0, 23);
     }
 }
