@@ -24,7 +24,7 @@ public class UsersController : ControllerBase
             .SetDeliveryTimeAsync(UserId, request.PreferredDeliveryDay, request.PreferredDeliveryHour);
 
         return result.IsSuccess
-            ? Ok(result)
+            ? Ok()
             : result.ToProblem();
     }
 
@@ -46,7 +46,7 @@ public class UsersController : ControllerBase
             .UpdateProfileAsync(UserId, request);
 
         return result.IsSuccess
-            ? Ok(result)
+            ? Ok()
             : result.ToProblem();
     }
 
@@ -57,7 +57,7 @@ public class UsersController : ControllerBase
             .GetProfileInfoAsync(UserId);
 
         return result.IsSuccess
-            ? Ok(result)
+            ? Ok(result.Value)
             : result.ToProblem();
     }
 }
