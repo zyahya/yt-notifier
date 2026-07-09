@@ -17,7 +17,7 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder
             .HasMany(x => x.Channels)
             .WithMany(x => x.Users)
-            .UsingEntity<Subscriptions>(
+            .UsingEntity<Subscription>(
                 r => r
                     .HasOne(x => x.Channel)
                     .WithMany(x => x.Subscriptions)

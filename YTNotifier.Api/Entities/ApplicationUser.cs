@@ -9,5 +9,5 @@ public class ApplicationUser : IdentityUser
     public DateTime LastDigestSendAt { get; set; }
 
     public ICollection<Channel> Channels { get; set; } = [];
-    public ICollection<Subscriptions> Subscriptions { get; set; } = [];
+    public ICollection<Subscription> Subscriptions { get; set; } = [];
 }

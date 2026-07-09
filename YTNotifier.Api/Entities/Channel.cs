@@ -7,6 +7,6 @@ public class Channel
     public DateTime LastSyncedAt { get; set; }
 
     public ICollection<ApplicationUser> Users { get; set; } = [];
-    public ICollection<Videos> Videos { get; set; } = [];
-    public ICollection<Subscriptions> Subscriptions { get; set; } = [];
+    public ICollection<Video> Videos { get; set; } = [];
+    public ICollection<Subscription> Subscriptions { get; set; } = [];
 }
