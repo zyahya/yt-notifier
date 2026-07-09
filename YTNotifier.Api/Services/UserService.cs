@@ -1,5 +1,7 @@
 ﻿using Mapster;
 
+using YTNotifier.Api.Abstractions.Errors;
+using YTNotifier.Api.Abstractions.Result;
 using YTNotifier.Api.Contracts.Users;
 
 namespace YTNotifier.Api.Services;

@@ -1,4 +1,5 @@
-﻿using YTNotifier.Api.Contracts.Users;
+﻿using YTNotifier.Api.Abstractions.Result;
+using YTNotifier.Api.Contracts.Users;
 
 namespace YTNotifier.Api.Services;
 

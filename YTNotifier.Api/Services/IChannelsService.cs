@@ -1,4 +1,6 @@
-﻿namespace YTNotifier.Api.Services;
+﻿using YTNotifier.Api.Abstractions.Result;
+
+namespace YTNotifier.Api.Services;
 
 public interface IChannelsService
 {
