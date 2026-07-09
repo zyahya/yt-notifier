@@ -7,4 +7,8 @@ public record ChannelErrors
 
     public static readonly Error ChannelAlreadyExists =
         new("ChannelErrors.AlreadyExists", "The provided YouTube channel already exists.", StatusCodes.Status400BadRequest);
+
+    public static readonly Error AlreadySubscribed =
+        new("ChannelErrors.AlreadySubscribed", "User already subscribed to this channel.", StatusCodes.Status400BadRequest);
+
 }
