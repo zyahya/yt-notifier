@@ -251,7 +251,7 @@ namespace YTNotifier.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Channels");
+                    b.ToTable("Channels", (string)null);
                 });
 
             modelBuilder.Entity("YTNotifier.Api.Entities.Subscriptions", b =>
@@ -266,7 +266,7 @@ namespace YTNotifier.Api.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("YTNotifier.Api.Entities.Videos", b =>
@@ -292,7 +292,7 @@ namespace YTNotifier.Api.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.ToTable("Videos");
+                    b.ToTable("Videos", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
