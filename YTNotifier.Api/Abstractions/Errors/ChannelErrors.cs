@@ -11,4 +11,6 @@ public record ChannelErrors
     public static readonly Error AlreadySubscribed =
         new("ChannelErrors.AlreadySubscribed", "User already subscribed to this channel.", StatusCodes.Status400BadRequest);
 
+    public static readonly Error AlreadyUnsubscribed =
+        new("ChannelErrors.AlreadyUnsubscribed", "User is already unsubscribed from this channel.", StatusCodes.Status400BadRequest);
 }
