@@ -39,9 +39,9 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpDelete()]
-    public async Task<IActionResult> Delete([FromBody] string channelId)
+    public async Task<IActionResult> Delete([FromBody] RemoveChannelRequest request)
     {
-        var result = await _channelsService.DeleteAsync(UserId, channelId);
+        var result = await _channelsService.DeleteAsync(UserId, request.ChannelUrl);
 
         return result.IsSuccess
             ? Ok()
