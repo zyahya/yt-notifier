@@ -90,19 +90,6 @@ public class ChannelsService : IChannelsService
         return Result.Success(channels);
     }
 
-    private async Task<Result> SaveUserAsync(ApplicationUser user)
-    {
-        var result = await _userManager.UpdateAsync(user);
-
-        if (result.Succeeded)
-            return Result.Success();
-
-        var error = result.Errors.First();
-
-        return Result.Failure(
-            new Error(error.Code, error.Description, StatusCodes.Status404NotFound));
-    }
-
     private static Result<string> GetChannelId(string channelUrl)
     {
         var match = Regex.Match(channelUrl, YouTubeRegex.ChannelUrl);
