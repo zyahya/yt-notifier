@@ -41,9 +41,37 @@ public class ChannelsService : IChannelsService
         return Result.Success();
     }
 
-    public Task<Result> DeleteAsync(string userId, string id)
+    public async Task<Result> DeleteAsync(string userId, string channelUrl)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+        {
+            return Result.Failure(UserErrors.NotFound);
+        }
+
+        var channelIdResult = GetChannelId(channelUrl);
+
+        if (channelIdResult.IsFailure)
+        {
+            return Result.Failure(channelIdResult.Error);
+        }
+
+        var channelId = channelIdResult.Value;
+
+        var subscription = await _context.Subscriptions.FirstOrDefaultAsync(
+            subscription => subscription.ChannelId == channelId && subscription.UserId == userId);
+
+        if (subscription == null)
+        {
+            return Result.Failure(ChannelErrors.AlreadyUnsubscribed);
+        }
+
+        _context.Subscriptions.Remove(subscription);
+
+        await _context.SaveChangesAsync();
+
+        return Result.Success();
     }
 
     public async Task<Result<List<Channel>>> GetAllAsync(string userId)
