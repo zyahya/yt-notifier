@@ -1,3 +1,7 @@
+using Hangfire;
+
+using HangfireBasicAuthenticationFilter;
+
 using Scalar.AspNetCore;
 
 using YTNotifier.Api;
@@ -15,6 +19,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseHangfireDashboard("/jobs", new DashboardOptions
+{
+    Authorization = [
+        new HangfireCustomBasicAuthenticationFilter
+        {
+            User = app.Configuration.GetValue<string>("HangfireSettings:Username"),
+            Pass = app.Configuration.GetValue<string>("HangfireSettings:Password")
+        }
+    ],
+    DashboardTitle = "YouTube Notifier Cron Jobs"
+});
 
 app.UseAuthorization();
 

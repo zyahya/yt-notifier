@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Google.Apis.YouTube.v3;
+
+using Hangfire;
+using Hangfire.PostgreSql;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using YTNotifier.Api.OpenAi;
 
@@ -12,6 +17,7 @@ public static class DependencyInjection
             .AddApiConfiguration()
             .AddDatabaseConfiguration(configuration)
             .AddAuthenticationConfiguration(configuration)
+            .AddHangfireConfiguration(configuration)
             .AddApplicationConfiguration();
 
         return services;
@@ -44,6 +50,27 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IChannelsService, ChannelsService>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddHangfireConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("HangfireConnection")
+            ?? throw new ArgumentException("Hangfire connection string not found.");
+
+        services.AddHangfire(configuration => configuration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UsePostgreSqlStorage(options => options.UseNpgsqlConnection(connectionString)));
+
+        services.AddHangfireServer();
+
+        services.AddOptions<YouTubeOptions>()
+            .BindConfiguration(YouTubeOptions.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         return services;
     }
