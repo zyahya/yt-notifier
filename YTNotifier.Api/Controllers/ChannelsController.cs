@@ -21,7 +21,7 @@ public class ChannelsController : ControllerBase
     [HttpGet()]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _channelsService.GetAllAsync(UserId);
+        var result = await _channelsService.GetSubscriptionsAsync(UserId);
 
         return result.IsSuccess
             ? Ok(result.Value)

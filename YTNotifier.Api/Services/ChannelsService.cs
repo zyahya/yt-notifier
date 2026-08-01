@@ -83,7 +83,7 @@ public class ChannelsService : IChannelsService
         return Result.Success();
     }
 
-    public async Task<Result<List<Channel>>> GetAllAsync(string userId)
+    public async Task<Result<List<Channel>>> GetSubscriptionsAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
