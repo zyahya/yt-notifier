@@ -20,7 +20,7 @@ public class ChannelsService : IChannelsService
         _youtubeOptions = youtubeOptions.Value;
     }
 
-    public async Task<Result> AddAsync(string userId, string channelUrl)
+    public async Task<Result> SubscribeAsync(string userId, string channelUrl)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
@@ -50,7 +50,7 @@ public class ChannelsService : IChannelsService
         return Result.Success();
     }
 
-    public async Task<Result> DeleteAsync(string userId, string channelUrl)
+    public async Task<Result> UnsubscribeAsync(string userId, string channelUrl)
     {
         var user = await _userManager.FindByIdAsync(userId);
 

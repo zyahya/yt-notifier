@@ -31,7 +31,7 @@ public class ChannelsController : ControllerBase
     [HttpPost()]
     public async Task<IActionResult> Add([FromBody] AddChannelRequest request)
     {
-        var result = await _channelsService.AddAsync(UserId, request.ChannelId);
+        var result = await _channelsService.SubscribeAsync(UserId, request.ChannelId);
 
         return result.IsSuccess
             ? Ok()
@@ -41,7 +41,7 @@ public class ChannelsController : ControllerBase
     [HttpDelete()]
     public async Task<IActionResult> Delete([FromBody] RemoveChannelRequest request)
     {
-        var result = await _channelsService.DeleteAsync(UserId, request.ChannelUrl);
+        var result = await _channelsService.UnsubscribeAsync(UserId, request.ChannelUrl);
 
         return result.IsSuccess
             ? Ok()
