@@ -2,7 +2,7 @@ namespace YTNotifier.Api.Entities;
 
 public class Video
 {
-    public int Id { get; set; }
+    public string Id { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public DateTime PublishedAt { get; set; }
 
