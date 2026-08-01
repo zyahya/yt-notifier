@@ -50,6 +50,8 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IChannelsService, ChannelsService>();
+        services.AddScoped<IYouTubeClient, YouTubeClient>();
+        services.AddScoped<IVideosService, VideosService>();
 
         return services;
     }
