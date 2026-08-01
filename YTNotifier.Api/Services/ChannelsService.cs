@@ -1,8 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 
-using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
-
 using Hangfire;
 
 namespace YTNotifier.Api.Services;
@@ -11,13 +8,13 @@ public class ChannelsService : IChannelsService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationDbContext _context;
-    private readonly YouTubeOptions _youtubeOptions;
+    private readonly IYouTubeClient _youTubeClient;
 
-    public ChannelsService(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IOptions<YouTubeOptions> youtubeOptions)
+    public ChannelsService(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IYouTubeClient youTubeClient)
     {
         _userManager = userManager;
         _context = context;
-        _youtubeOptions = youtubeOptions.Value;
+        _youTubeClient = youTubeClient;
     }
 
     public async Task<Result> SubscribeAsync(string userId, string channelUrl)
@@ -45,7 +42,7 @@ public class ChannelsService : IChannelsService
             return Result.Failure(subscriptionResult.Error);
         }
 
-        BackgroundJob.Enqueue(() => GetChannelTitleAsync(channelId));
+        BackgroundJob.Enqueue(() => _youTubeClient.GetChannelTitleAsync(channelId));
 
         return Result.Success();
     }
@@ -137,27 +134,5 @@ public class ChannelsService : IChannelsService
         await _context.SaveChangesAsync();
 
         return Result.Success();
-    }
-
-    public async Task GetChannelTitleAsync(string channelId)
-    {
-        var youtube = new YouTubeService(new BaseClientService.Initializer
-        {
-            ApiKey = _youtubeOptions.ApiKey,
-            ApplicationName = _youtubeOptions.ApplicationName
-        });
-
-        var request = youtube.Channels.List("snippet");
-
-        request.Id = channelId;
-
-        var response = await request.ExecuteAsync();
-
-        var title = response.Items.FirstOrDefault()?.Snippet.Title!;
-
-        var channel = await _context.Channels.FindAsync(channelId);
-        channel!.Name = title;
-
-        await _context.SaveChangesAsync();
     }
 }
