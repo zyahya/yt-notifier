@@ -12,8 +12,8 @@ using YTNotifier.Api;
 namespace YTNotifier.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260801125423_ChangeTypeInVideosTableFromIntToString")]
-    partial class ChangeTypeInVideosTableFromIntToString
+    [Migration("20260801133601_AddVideoIdColumnInVideosTable")]
+    partial class AddVideoIdColumnInVideosTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -274,8 +274,11 @@ namespace YTNotifier.Api.Migrations
 
             modelBuilder.Entity("YTNotifier.Api.Entities.Video", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ChannelId")
                         .IsRequired()
@@ -285,6 +288,10 @@ namespace YTNotifier.Api.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VideoId")
                         .IsRequired()
                         .HasColumnType("text");
 

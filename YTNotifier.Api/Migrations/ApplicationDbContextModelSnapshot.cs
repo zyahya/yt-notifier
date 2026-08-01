@@ -271,8 +271,11 @@ namespace YTNotifier.Api.Migrations
 
             modelBuilder.Entity("YTNotifier.Api.Entities.Video", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ChannelId")
                         .IsRequired()
@@ -282,6 +285,10 @@ namespace YTNotifier.Api.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VideoId")
                         .IsRequired()
                         .HasColumnType("text");
 
