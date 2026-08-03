@@ -5,6 +5,8 @@ using Hangfire.PostgreSql;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+using RazorLight;
+
 using YTNotifier.Api.OpenAi;
 
 namespace YTNotifier.Api;
@@ -52,6 +54,14 @@ public static class DependencyInjection
         services.AddScoped<IChannelsService, ChannelsService>();
         services.AddScoped<IYouTubeClient, YouTubeClient>();
         services.AddScoped<IVideosService, VideosService>();
+        services.AddScoped<IEmailSender, EmailSender>();
+        services.AddScoped<IEmailTemplateRenderer, EmailTemplateRenderer>();
+        services.AddScoped<IWeeklyDigestOrchestrator, WeeklyDigestOrchestrator>();
+
+        services.AddOptions<SmtpOptions>()
+            .BindConfiguration(SmtpOptions.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         return services;
     }
