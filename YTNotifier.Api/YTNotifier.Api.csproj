@@ -7,6 +7,10 @@
     <UserSecretsId>bba78095-d91b-4d5f-9cfe-3ccf0748a767</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- Background Jobs -->
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.24" />
@@ -16,6 +20,8 @@
 
     <!-- Services -->
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.75.0.4207" />
+    <PackageReference Include="MailKit" Version="4.17.0" />
+    <PackageReference Include="RazorLight" Version="2.3.1" />
 
     <!-- Security -->
     <PackageReference Include="Mapster" Version="10.0.8" />
