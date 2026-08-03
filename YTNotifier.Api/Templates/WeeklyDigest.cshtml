@@ -1,0 +1,113 @@
+@using YTNotifier.Api.Templates
+
+@model WeeklyDigestEmailModel
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Video Digest</title>
+</head>
+
+<body style="
+  margin: 0;
+  padding: 28px 14px;
+  background-color: #f8fafc;
+  font-family:
+  -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto,
+  Helvetica, Arial, sans-serif;
+  ">
+  <table role="presentation" align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
+         style="max-width: 480px">
+    <tr>
+      <td style="
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        ">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"
+               style="border-bottom: 1px solid #c1c1c1; margin-bottom: 24px">
+          <tr>
+            <td style="width: 25px; vertical-align: top; padding-top: 2px">
+              <img src="https://www.svgrepo.com/show/511297/spiral-30.svg" alt="Logo" width="40" height="40" style="
+              display: block;
+              border: 0;
+              outline: none;
+              text-decoration: none;
+              " />
+            </td>
+
+            <td style="padding-left: 12px; vertical-align: top">
+              <h1 style="
+                margin: 0;
+                font-size: 18px;
+                line-height: 1.3;
+                font-weight: 700;
+                color: #0f172a;
+                ">
+                Your Daily Feed
+              </h1>
+
+              <div style="
+                font-size: 12px;
+                line-height: 1.35;
+                font-style: italic;
+                color: #64748b;
+                letter-spacing: 0.2px;
+                padding: 5px 0 7px;
+                ">
+                @Model.Date.ToString("MMMM dd, yyyy")
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        @foreach (var video in Model.Videos)
+        {
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background-color: #f1f5fa;
+            box-shadow: 0 2px 8px 0 rgba(31, 41, 55, 0.04);
+            ">
+            <tr>
+              <td style="background-color: #f8fafc; border-radius: 12px">
+                <a href="@video.VideoId" style="text-decoration: none; display: block; padding: 16px">
+                  <div style="
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 1.4;
+                    color: #1d4ed8;
+                    margin-bottom: 6px;
+                    unicode-bidi: plaintext;
+                    text-align: left;
+                    ">
+                    @video.Title
+                  </div>
+
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="
+                        font-size: 13px;
+                        color: #64748b;
+                        unicode-bidi: plaintext;
+                        ">
+                        @video.Channel
+                      </td>
+                    </tr>
+                  </table>
+                </a>
+              </td>
+            </tr>
+          </table>
+        }
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
