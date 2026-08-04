@@ -66,10 +66,4 @@ public class UserService : IUserService
 
         return Result.Success();
     }
-
-    public Task<Result> UpdateProfileAsync(string userId, UpdateProfileRequest request)
-    {
-        // TODO: Implement 'UpdateProfileAsync'
-        throw new NotImplementedException();
-    }
 }

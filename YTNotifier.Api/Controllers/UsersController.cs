@@ -39,17 +39,6 @@ public class UsersController : ControllerBase
             : result.ToProblem();
     }
 
-    [HttpPost("update-profile")]
-    public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
-    {
-        var result = await _userService
-            .UpdateProfileAsync(UserId, request);
-
-        return result.IsSuccess
-            ? Ok()
-            : result.ToProblem();
-    }
-
     [HttpGet("get-profile-info")]
     public async Task<IActionResult> GetProfileInfo()
     {
