@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
 using YTNotifier.Api.Contracts.Channels;
-using YTNotifier.Api.Contracts.Users;
 
 namespace YTNotifier.Api.Controllers;
 

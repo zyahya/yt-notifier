@@ -1,6 +1,4 @@
-﻿using YTNotifier.Api.Abstractions.Errors;
-
-namespace YTNotifier.Api.Abstractions.Result;
+﻿namespace YTNotifier.Api.Abstractions.Result;
 
 public class Result
 {
