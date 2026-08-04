@@ -22,6 +22,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
         CancellationToken cancellationToken = default)
     {
         var users = await _db.Users
+            .Where(x => x.NextDigestAt <= DateTime.UtcNow)
             .Include(x => x.Subscriptions)
             .ToListAsync(cancellationToken);
 
@@ -52,6 +53,8 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 user.Email!,
                 "Your Weekly YouTube Digest",
                 html);
+
+            user.NextDigestAt = user.NextDigestAt.AddDays(7);
         }
     }
 }

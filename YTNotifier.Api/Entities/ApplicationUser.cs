@@ -6,7 +6,7 @@ public class ApplicationUser : IdentityUser
     public string LastName { get; set; } = string.Empty;
     public int PreferredDeliveryDay { get; set; } = 0;
     public int PreferredDeliveryHour { get; set; } = 0;
-    public DateTime LastDigestSendAt { get; set; }
+    public DateTime NextDigestAt { get; set; }
 
     public ICollection<Channel> Channels { get; set; } = [];
     public ICollection<Subscription> Subscriptions { get; set; } = [];

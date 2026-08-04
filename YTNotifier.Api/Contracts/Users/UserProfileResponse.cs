@@ -6,5 +6,5 @@ public record UserProfileResponse(
     string LastName,
     int PreferredDeliveryDay,
     int PreferredDeliveryHour,
-    DateTime LastDigestSendAt
+    DateTime NextDigestAt
 );
