@@ -32,6 +32,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 .ToList();
 
             var videos = await _db.Videos
+                .Include(v => v.Channel)
                 .Where(v => channelIds.Contains(v.ChannelId))
                 .OrderByDescending(v => v.PublishedAt)
                 .ToListAsync(cancellationToken);
