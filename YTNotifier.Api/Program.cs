@@ -2,25 +2,13 @@ using Hangfire;
 
 using HangfireBasicAuthenticationFilter;
 
-using RazorLight;
-
 using Scalar.AspNetCore;
 
 using YTNotifier.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton(provider =>
-{
-    return new RazorLightEngineBuilder()
-        .UseFileSystemProject(Path.Combine(
-            builder.Environment.ContentRootPath,
-            "Templates"))
-        .UseMemoryCachingProvider()
-        .Build();
-});
-
-builder.Services.AddDependencyInjection(builder.Configuration);
+builder.Services.AddDependencyInjection(builder, builder.Configuration);
 
 var app = builder.Build();
 
@@ -49,10 +37,7 @@ using var scope = scopeFactory.CreateScope();
 var videosService = scope.ServiceProvider.GetRequiredService<IVideosService>();
 
 RecurringJob.AddOrUpdate("SyncLatestVideos", () => videosService.SyncLatestVideosAsync(), "0 12 * * 5");
-RecurringJob.AddOrUpdate<IWeeklyDigestOrchestrator>(
-    "WeeklyDigest",
-    x => x.ExecuteAsync(CancellationToken.None),
-    "0 12 * * 5");
+RecurringJob.AddOrUpdate<IWeeklyDigestOrchestrator>("WeeklyDigest", x => x.ExecuteAsync(CancellationToken.None), "0 12 * * 5");
 
 app.UseAuthorization();
 
