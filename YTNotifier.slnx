@@ -1,5 +1,3 @@
 <Solution>
-  <Project Path="YTNotifier.Api.IntegrationTests/YTNotifier.Api.IntegrationTests.csproj" />
-  <Project Path="YTNotifier.Api.UnitTests/YTNotifier.Api.UnitTests.csproj" />
   <Project Path="YTNotifier.Api/YTNotifier.Api.csproj" />
 </Solution>
