@@ -39,6 +39,8 @@ var videosService = scope.ServiceProvider.GetRequiredService<IVideosService>();
 RecurringJob.AddOrUpdate("SyncLatestVideos", () => videosService.SyncLatestVideosAsync(), "0 12 * * 5");
 RecurringJob.AddOrUpdate<IWeeklyDigestOrchestrator>("WeeklyDigest", x => x.ExecuteAsync(CancellationToken.None), "0 12 * * 5");
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
