@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet run --project ./YTNotifier.Api/YTNotifier.Api.csproj --launch-profile https
+dotnet run --project ./YouTubeNotifier.Api/YouTubeNotifier.Api.csproj --launch-profile https

@@ -1,0 +1,52 @@
+using Microsoft.AspNetCore.Authorization;
+
+using YouTubeNotifier.Api.Contracts.Users;
+
+namespace YouTubeNotifier.Api.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+[Authorize]
+public class UsersController : ControllerBase
+{
+    private readonly IUserService _userService;
+    private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+    public UsersController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
+    [HttpPut("update-delivery-time")]
+    public async Task<IActionResult> UpdateDeliveryTime([FromBody] UpdateDeliveryTimeRequest request)
+    {
+        var result = await _userService
+            .UpdateDeliveryTimeAsync(UserId, request.PreferredDeliveryDay, request.PreferredDeliveryHour);
+
+        return result.IsSuccess
+            ? Ok()
+            : result.ToProblem();
+    }
+
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        var result = await _userService
+            .ChangePasswordAsync(UserId, request);
+
+        return result.IsSuccess
+            ? Ok()
+            : result.ToProblem();
+    }
+
+    [HttpGet("get-profile-info")]
+    public async Task<IActionResult> GetProfileInfo()
+    {
+        var result = await _userService
+            .GetProfileInfoAsync(UserId);
+
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : result.ToProblem();
+    }
+}

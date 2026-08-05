@@ -1,0 +1,49 @@
+using Microsoft.AspNetCore.Authorization;
+
+using YouTubeNotifier.Api.Contracts.Channels;
+
+namespace YouTubeNotifier.Api.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+[Authorize]
+public class ChannelsController : ControllerBase
+{
+    private readonly IChannelsService _channelsService;
+    private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+    public ChannelsController(IChannelsService channelsService)
+    {
+        _channelsService = channelsService;
+    }
+
+    [HttpGet()]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _channelsService.GetSubscriptionsAsync(UserId);
+
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : result.ToProblem();
+    }
+
+    [HttpPost()]
+    public async Task<IActionResult> Add([FromBody] AddChannelRequest request)
+    {
+        var result = await _channelsService.SubscribeAsync(UserId, request.ChannelId);
+
+        return result.IsSuccess
+            ? Ok()
+            : result.ToProblem();
+    }
+
+    [HttpDelete()]
+    public async Task<IActionResult> Delete([FromBody] RemoveChannelRequest request)
+    {
+        var result = await _channelsService.UnsubscribeAsync(UserId, request.ChannelUrl);
+
+        return result.IsSuccess
+            ? Ok()
+            : result.ToProblem();
+    }
+}
