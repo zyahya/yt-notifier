@@ -212,8 +212,8 @@ namespace YTNotifier.Api.Migrations
                     b.Property<int>("PreferredDeliveryDay")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PreferredDeliveryHour")
-                        .HasColumnType("integer");
+                    b.Property<TimeOnly>("PreferredDeliveryHour")
+                        .HasColumnType("time without time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");

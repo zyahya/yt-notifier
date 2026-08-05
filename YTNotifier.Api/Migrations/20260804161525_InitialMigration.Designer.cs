@@ -12,8 +12,8 @@ using YTNotifier.Api;
 namespace YTNotifier.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260621072127_ModifyFirstAndLastNameColumnsInUsersTable")]
-    partial class ModifyFirstAndLastNameColumnsInUsersTable
+    [Migration("20260804161525_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,6 +192,9 @@ namespace YTNotifier.Api.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime>("NextDigestAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -208,6 +211,12 @@ namespace YTNotifier.Api.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("PreferredDeliveryDay")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeOnly>("PreferredDeliveryHour")
+                        .HasColumnType("time without time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
@@ -229,6 +238,68 @@ namespace YTNotifier.Api.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Channel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("LastSyncedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Channels");
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Subscription", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChannelId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "ChannelId");
+
+                    b.HasIndex("ChannelId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ChannelId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PublishedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VideoId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -280,6 +351,48 @@ namespace YTNotifier.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Subscription", b =>
+                {
+                    b.HasOne("YTNotifier.Api.Entities.Channel", "Channel")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YTNotifier.Api.Entities.ApplicationUser", "User")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Video", b =>
+                {
+                    b.HasOne("YTNotifier.Api.Entities.Channel", "Channel")
+                        .WithMany("Videos")
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("Subscriptions");
+                });
+
+            modelBuilder.Entity("YTNotifier.Api.Entities.Channel", b =>
+                {
+                    b.Navigation("Subscriptions");
+
+                    b.Navigation("Videos");
                 });
 #pragma warning restore 612, 618
         }
