@@ -3,6 +3,8 @@ using Hangfire.PostgreSql;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+using System.Text.Json.Serialization;
+
 using RazorLight;
 
 using YTNotifier.Api.OpenAi;
@@ -29,7 +31,13 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new JsonStringEnumConverter());
+            });
 
         services
             .AddOpenApi(options =>
