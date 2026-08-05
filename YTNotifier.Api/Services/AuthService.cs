@@ -49,6 +49,7 @@ public class AuthService : IAuthService
 
         var user = request.Adapt<ApplicationUser>();
         user.UserName = request.Email;
+        user.NextDigestAt = CalculateNextDigestAt(request.PreferredDeliveryDay, request.PreferredDeliveryHour, DateTime.UtcNow);
 
         var creationResult = await _userManager.CreateAsync(user, request.Password);
 
@@ -63,5 +64,21 @@ public class AuthService : IAuthService
         return Result.Success(
             new AuthResponse(user.Id, user.FirstName, user.LastName, user.Email!, token, expiresIn)
         );
+    }
+
+    private static DateTime CalculateNextDigestAt(DayOfWeek deliveryDay, TimeOnly deliveryTime, DateTime utcNow)
+    {
+        var daysUntil = ((int)deliveryDay - (int)utcNow.DayOfWeek + 7) % 7;
+
+        var next = utcNow.Date
+            .AddDays(daysUntil)
+            .Add(deliveryTime.ToTimeSpan());
+
+        if (next <= utcNow)
+        {
+            next = next.AddDays(7);
+        }
+
+        return DateTime.SpecifyKind(next, DateTimeKind.Utc);
     }
 }
