@@ -66,7 +66,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 "Your Weekly YouTube Digest",
                 html);
 
-            user.NextDigestAt = user.NextDigestAt.AddDays(7);
+            user.NextDigestAt = DateTime.SpecifyKind(user.NextDigestAt.AddDays(7), DateTimeKind.Utc);
             await _context.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Weekly digest sent to user {UserId}; next digest scheduled for {NextDigestAt}.", user.Id, user.NextDigestAt);
