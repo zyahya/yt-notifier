@@ -4,10 +4,8 @@ public class SetDeliveryTimeRequestValidator : AbstractValidator<UpdateDeliveryT
 {
     public SetDeliveryTimeRequestValidator()
     {
-        RuleFor(x => x.DeliveryDay)
-            .ExclusiveBetween(0, 6);
-
-        RuleFor(x => x.DeliveryHour)
-            .ExclusiveBetween(0, 23);
+        RuleFor(x => x.PreferredDeliveryDay)
+            .IsInEnum()
+            .WithMessage("{PreferredDeliveryDay} must be a valid day of the week. e.g. Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
     }
 }

@@ -4,7 +4,7 @@ public record UserProfileResponse(
     string Email,
     string FirstName,
     string LastName,
-    int PreferredDeliveryDay,
-    int PreferredDeliveryHour,
+    DayOfWeek PreferredDeliveryDay,
+    TimeOnly PreferredDeliveryHour,
     DateTime NextDigestAt
 );

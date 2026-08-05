@@ -15,5 +15,9 @@ public class RegisterRequestValidators : AbstractValidator<RegisterRequest>
 
         RuleFor(x => x.Password)
             .MinimumLength(8);
+
+        RuleFor(x => x.PreferredDeliveryDay)
+            .IsInEnum()
+            .WithMessage("{PreferredDeliveryDay} must be a valid day of the week. e.g. Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
     }
 }

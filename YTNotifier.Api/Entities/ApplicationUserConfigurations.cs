@@ -14,6 +14,12 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.Property(x => x.PreferredDeliveryDay)
+             .IsRequired();
+
+        builder.Property(x => x.PreferredDeliveryHour)
+            .IsRequired();
+
         builder
             .HasMany(x => x.Channels)
             .WithMany(x => x.Users)
