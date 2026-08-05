@@ -4,7 +4,7 @@ namespace YTNotifier.Api.Services;
 
 public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
 {
-    private readonly ApplicationDbContext _db;
+    private readonly ApplicationDbContext _context;
     private readonly IEmailTemplateRenderer _renderer;
     private readonly IEmailSender _sender;
 
@@ -13,7 +13,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
         IEmailTemplateRenderer renderer,
         IEmailSender sender)
     {
-        _db = db;
+        _context = db;
         _renderer = renderer;
         _sender = sender;
     }
@@ -21,7 +21,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
     public async Task ExecuteAsync(
         CancellationToken cancellationToken = default)
     {
-        var users = await _db.Users
+        var users = await _context.Users
             .Where(x => x.NextDigestAt <= DateTime.UtcNow)
             .Include(x => x.Subscriptions)
             .ToListAsync(cancellationToken);
@@ -32,7 +32,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 .Select(x => x.ChannelId)
                 .ToList();
 
-            var videos = await _db.Videos
+            var videos = await _context.Videos
                 .Include(v => v.Channel)
                 .Where(v => channelIds.Contains(v.ChannelId))
                 .OrderByDescending(v => v.PublishedAt)
@@ -55,7 +55,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 html);
 
             user.NextDigestAt = user.NextDigestAt.AddDays(7);
-            await _db.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
