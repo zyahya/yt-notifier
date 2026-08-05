@@ -42,8 +42,6 @@ public class ChannelsService : IChannelsService
             return Result.Failure(subscriptionResult.Error);
         }
 
-        BackgroundJob.Enqueue(() => _youTubeClient.GetChannelTitleAsync(channelId));
-
         return Result.Success();
     }
 
@@ -112,9 +110,12 @@ public class ChannelsService : IChannelsService
     {
         if (!await _context.Channels.AnyAsync(channel => channel.Id == channelId))
         {
+            var channelName = await _youTubeClient.GetChannelTitleAsync(channelId);
+
             await _context.Channels.AddAsync(new Channel
             {
-                Id = channelId
+                Id = channelId,
+                Name = channelName!
             });
         }
 
