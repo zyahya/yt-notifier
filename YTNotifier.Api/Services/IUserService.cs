@@ -6,5 +6,5 @@ public interface IUserService
 {
     Task<Result<UserProfileResponse>> GetProfileInfoAsync(string userId);
     Task<Result> ChangePasswordAsync(string userId, ChangePasswordRequest request);
-    Task<Result> SetDeliveryTimeAsync(string userId, int day, int hour);
+    Task<Result> UpdateDeliveryTimeAsync(string userId, DayOfWeek day, TimeOnly time);
 }

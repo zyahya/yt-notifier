@@ -40,7 +40,7 @@ public class UserService : IUserService
         return Result.Success(user);
     }
 
-    public async Task<Result> SetDeliveryTimeAsync(string userId, int day, int hour)
+    public async Task<Result> UpdateDeliveryTimeAsync(string userId, DayOfWeek day, TimeOnly time)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
@@ -49,18 +49,8 @@ public class UserService : IUserService
             return Result.Failure(UserErrors.NotFound);
         }
 
-        if (!(day is >= 0 and <= 6))
-        {
-            return Result.Failure(UserErrors.InvalidDeliveryDay);
-        }
-
-        if (!(hour is >= 0 and <= 23))
-        {
-            return Result.Failure(UserErrors.InvalidDeliveryHour);
-        }
-
         user.PreferredDeliveryDay = day;
-        user.PreferredDeliveryHour = hour;
+        user.PreferredDeliveryHour = time;
 
         await _userManager.UpdateAsync(user);
 

@@ -17,11 +17,11 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost("update-delivery-time")]
+    [HttpPut("update-delivery-time")]
     public async Task<IActionResult> UpdateDeliveryTime([FromBody] UpdateDeliveryTimeRequest request)
     {
         var result = await _userService
-            .SetDeliveryTimeAsync(UserId, request.DeliveryDay, request.DeliveryHour);
+            .UpdateDeliveryTimeAsync(UserId, request.PreferredDeliveryDay, request.PreferredDeliveryHour);
 
         return result.IsSuccess
             ? Ok()
