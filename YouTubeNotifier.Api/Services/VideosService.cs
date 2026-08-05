@@ -53,6 +53,7 @@ public class VideosService : IVideosService
             addedVideos++;
         }
 
+        channel.LastSyncedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
         await _context.SaveChangesAsync();
 
         _logger.LogInformation(
