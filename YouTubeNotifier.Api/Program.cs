@@ -4,11 +4,16 @@ using HangfireBasicAuthenticationFilter;
 
 using Scalar.AspNetCore;
 
+using Serilog;
+
 using YouTubeNotifier.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDependencyInjection(builder, builder.Configuration);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
