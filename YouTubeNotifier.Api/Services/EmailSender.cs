@@ -8,10 +8,12 @@ namespace YouTubeNotifier.Api.Services;
 public class EmailSender : IEmailSender
 {
     private readonly SmtpOptions _options;
+    private readonly ILogger<EmailSender> _logger;
 
-    public EmailSender(IOptions<SmtpOptions> options)
+    public EmailSender(IOptions<SmtpOptions> options, ILogger<EmailSender> logger)
     {
         _options = options.Value;
+        _logger = logger;
     }
 
     public async Task SendAsync(
@@ -19,34 +21,46 @@ public class EmailSender : IEmailSender
     string subject,
     string html)
     {
-        var message = new MimeMessage();
+        _logger.LogInformation("Sending email with subject {Subject} to {Recipient}.", subject, to);
 
-        message.From.Add(new MailboxAddress(
-            _options.DisplayName,
-            _options.Email));
-
-        message.To.Add(MailboxAddress.Parse(to));
-
-        message.Subject = subject;
-
-        message.Body = new BodyBuilder
+        try
         {
-            HtmlBody = html
-        }.ToMessageBody();
+            var message = new MimeMessage();
 
-        using var smtp = new SmtpClient();
+            message.From.Add(new MailboxAddress(
+                _options.DisplayName,
+                _options.Email));
 
-        await smtp.ConnectAsync(
-            _options.Host,
-            _options.Port,
-            SecureSocketOptions.StartTls);
+            message.To.Add(MailboxAddress.Parse(to));
 
-        await smtp.AuthenticateAsync(
-            _options.Email,
-            _options.Password);
+            message.Subject = subject;
 
-        await smtp.SendAsync(message);
+            message.Body = new BodyBuilder
+            {
+                HtmlBody = html
+            }.ToMessageBody();
 
-        await smtp.DisconnectAsync(true);
+            using var smtp = new SmtpClient();
+
+            await smtp.ConnectAsync(
+                _options.Host,
+                _options.Port,
+                SecureSocketOptions.StartTls);
+
+            await smtp.AuthenticateAsync(
+                _options.Email,
+                _options.Password);
+
+            await smtp.SendAsync(message);
+
+            await smtp.DisconnectAsync(true);
+
+            _logger.LogInformation("Email sent successfully to {Recipient}.", to);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Failed to send email with subject {Subject} to {Recipient}.", subject, to);
+            throw;
+        }
     }
 }

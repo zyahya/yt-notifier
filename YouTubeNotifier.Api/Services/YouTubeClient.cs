@@ -9,10 +9,12 @@ public class YouTubeClient : IYouTubeClient
 {
     private readonly YouTubeOptions _youtubeOptions;
     private readonly YouTubeService _client;
+    private readonly ILogger<YouTubeClient> _logger;
 
-    public YouTubeClient(IOptions<YouTubeOptions> youtubeOptions)
+    public YouTubeClient(IOptions<YouTubeOptions> youtubeOptions, ILogger<YouTubeClient> logger)
     {
         _youtubeOptions = youtubeOptions.Value;
+        _logger = logger;
 
         _client = new YouTubeService(new BaseClientService.Initializer
         {
@@ -23,33 +25,64 @@ public class YouTubeClient : IYouTubeClient
 
     public async Task<List<YouTubeVideoResponse>> GetLatestVideosAsync(string channelId)
     {
-        var request = _client.Search.List("snippet");
+        _logger.LogInformation("Fetching latest videos for channel {ChannelId}.", channelId);
 
-        request.ChannelId = channelId;
-        request.Order = SearchResource.ListRequest.OrderEnum.Date;
-        request.Type = "video";
-        request.MaxResults = 10;
+        try
+        {
+            var request = _client.Search.List("snippet");
 
-        var response = await request.ExecuteAsync();
+            request.ChannelId = channelId;
+            request.Order = SearchResource.ListRequest.OrderEnum.Date;
+            request.Type = "video";
+            request.MaxResults = 10;
 
-        return response.Items
-            .Where(v => v.Id.Kind == "youtube#video")
-            .Select(v => new YouTubeVideoResponse(
-                v.Id.VideoId,
-                v.Snippet.Title,
-                v.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                channelId
-            ))
-            .ToList();
+            var response = await request.ExecuteAsync();
+
+            var videos = response.Items
+                .Where(v => v.Id.Kind == "youtube#video")
+                .Select(v => new YouTubeVideoResponse(
+                    v.Id.VideoId,
+                    v.Snippet.Title,
+                    v.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
+                    channelId
+                ))
+                .ToList();
+
+            _logger.LogInformation("Fetched {VideoCount} latest videos for channel {ChannelId}.", videos.Count, channelId);
+
+            return videos;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Failed to fetch latest videos for channel {ChannelId}.", channelId);
+            throw;
+        }
     }
 
     public async Task<string?> GetChannelTitleAsync(string channelId)
     {
-        var request = _client.Channels.List("snippet");
-        request.Id = channelId;
+        _logger.LogInformation("Fetching channel title for channel {ChannelId}.", channelId);
 
-        var response = await request.ExecuteAsync();
+        try
+        {
+            var request = _client.Channels.List("snippet");
+            request.Id = channelId;
 
-        return response.Items.FirstOrDefault()?.Snippet.Title;
+            var response = await request.ExecuteAsync();
+
+            var title = response.Items.FirstOrDefault()?.Snippet.Title;
+
+            if (title is null)
+            {
+                _logger.LogWarning("No channel title was returned for channel {ChannelId}.", channelId);
+            }
+
+            return title;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Failed to fetch channel title for channel {ChannelId}.", channelId);
+            throw;
+        }
     }
 }
