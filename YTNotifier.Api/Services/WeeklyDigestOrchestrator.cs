@@ -55,6 +55,7 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
                 html);
 
             user.NextDigestAt = user.NextDigestAt.AddDays(7);
+            await _db.SaveChangesAsync(cancellationToken);
         }
     }
 }
