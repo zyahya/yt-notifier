@@ -1,4 +1,4 @@
-﻿namespace YouTubeNotifier.Api.Abstractions.Errors;
+﻿namespace YouTubeNotifier.Api.Errors;
 
 public record UserErrors
 {

@@ -1,4 +1,4 @@
-namespace YouTubeNotifier.Api.Abstractions.Constants;
+namespace YouTubeNotifier.Api.Constants;
 
 public class YouTubeRegex
 {
