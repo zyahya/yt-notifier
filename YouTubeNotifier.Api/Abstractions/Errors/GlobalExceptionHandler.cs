@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace YouTubeNotifier.Api.Errors;
+namespace YouTubeNotifier.Api.Abstractions.Errors;
 
 public sealed class GlobalExceptionHandler : IExceptionHandler
 {

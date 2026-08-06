@@ -1,4 +1,4 @@
-﻿namespace YouTubeNotifier.Api.Result;
+﻿namespace YouTubeNotifier.Api.Abstractions.Result;
 
 public static class ResultExtensions
 {
