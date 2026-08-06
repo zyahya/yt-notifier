@@ -42,7 +42,9 @@ public static class DependencyInjection
             .AddValidatorsFromAssemblyContaining<Program>()
             .AddFluentValidationAutoValidation();
 
-        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services
+            .AddExceptionHandler<GlobalExceptionHandler>()
+            .AddProblemDetails();
 
         return services;
     }
