@@ -18,7 +18,7 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpGet()]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetSubscriptions()
     {
         var result = await _channelsService.GetSubscriptionsAsync(UserId);
 
@@ -28,7 +28,7 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpPost()]
-    public async Task<IActionResult> Add([FromBody] AddChannelRequest request)
+    public async Task<IActionResult> Subscribe([FromBody] AddChannelRequest request)
     {
         var result = await _channelsService.SubscribeAsync(UserId, request.ChannelId);
 
@@ -38,7 +38,7 @@ public class ChannelsController : ControllerBase
     }
 
     [HttpDelete()]
-    public async Task<IActionResult> Delete([FromBody] RemoveChannelRequest request)
+    public async Task<IActionResult> Unsubscribe([FromBody] RemoveChannelRequest request)
     {
         var result = await _channelsService.UnsubscribeAsync(UserId, request.ChannelUrl);
 
