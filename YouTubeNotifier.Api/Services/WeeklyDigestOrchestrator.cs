@@ -10,12 +10,12 @@ public sealed class WeeklyDigestOrchestrator : IWeeklyDigestOrchestrator
     private readonly ILogger<WeeklyDigestOrchestrator> _logger;
 
     public WeeklyDigestOrchestrator(
-        ApplicationDbContext db,
+        ApplicationDbContext context,
         IEmailTemplateRenderer renderer,
         IEmailSender sender,
         ILogger<WeeklyDigestOrchestrator> logger)
     {
-        _context = db;
+        _context = context;
         _renderer = renderer;
         _sender = sender;
         _logger = logger;
