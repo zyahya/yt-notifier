@@ -2,6 +2,8 @@
 
 using Hangfire;
 
+using YouTubeNotifier.Api.Contracts.Channels;
+
 namespace YouTubeNotifier.Api.Services;
 
 public class ChannelsService : IChannelsService
@@ -98,7 +100,7 @@ public class ChannelsService : IChannelsService
         return Result.Success();
     }
 
-    public async Task<Result<List<Channel>>> GetSubscriptionsAsync(string userId)
+    public async Task<Result<List<ChannelResponse>>> GetSubscriptionsAsync(string userId)
     {
         _logger.LogInformation("Fetching subscriptions for user {UserId}.", userId);
 
@@ -107,11 +109,16 @@ public class ChannelsService : IChannelsService
         if (user is null)
         {
             _logger.LogWarning("Fetching subscriptions failed because user {UserId} was not found.", userId);
-            return Result.Failure<List<Channel>>(UserErrors.NotFound);
+            return Result.Failure<List<ChannelResponse>>(UserErrors.NotFound);
         }
 
         var channels = await _context.Channels
             .Where(channel => channel.Users.Any(user => user.Id == userId))
+            .Select(channel => new ChannelResponse(
+                channel.Id,
+                channel.Name,
+                channel.LastSyncedAt
+            ))
             .ToListAsync();
 
         _logger.LogInformation("Fetched {ChannelCount} subscriptions for user {UserId}.", channels.Count, userId);
