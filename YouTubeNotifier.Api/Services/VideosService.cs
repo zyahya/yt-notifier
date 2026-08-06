@@ -22,7 +22,7 @@ public class VideosService : IVideosService
     {
         _logger.LogInformation("Starting video synchronization across all channels.");
 
-        var channels = await _context.Channels.ToListAsync();
+        var channels = await _context.Channels.AsNoTracking().ToListAsync();
 
         _logger.LogInformation("Found {ChannelCount} channels to synchronize.", channels.Count);
 
