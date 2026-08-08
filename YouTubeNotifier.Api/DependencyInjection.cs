@@ -59,6 +59,10 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString));
 
+        services
+            .AddHealthChecks()
+            .AddNpgSql(name: "database", connectionString: connectionString);
+
         return services;
     }
 
